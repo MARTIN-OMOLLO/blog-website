@@ -3,13 +3,16 @@ class Config:
     '''
     General configuration parent class
     '''
-    SECRET_KEY = 'blog'
+    SECRET_KEY = 'pitches'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     @staticmethod
     def init_app(app):
         pass
+    
 
-    class ProdConfig(Config):
+
+
+class ProdConfig(Config):
     '''
     Production  configuration child class
 
@@ -27,10 +30,10 @@ class DevConfig(Config):
     Args:
         Config: The parent configuration class with General configuration settings
     '''
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://martin:martin123@localhost/blog'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://martin:martin123@localhost/pitches'
     DEBUG = True
 
 config_options = {
 'development':DevConfig,
 'production':ProdConfig
-    
+}

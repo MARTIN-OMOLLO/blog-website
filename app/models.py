@@ -45,7 +45,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
     class Blog(db.Model):
-    _tablename_ = 'blogs'
+     _tablename_ = 'blogs'
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(150),nullable = False)
     post = db.Column(db.Text(), nullable = False)
@@ -103,7 +103,7 @@ class Downvote(db.Model):
     def _repr_(self):
         return f'{self.user_id}:{self.pitch_id}'
 
-        class Comment(db.Model):
+class Comment(db.Model):
     _tablename_ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.Text(),nullable = False)
@@ -122,6 +122,6 @@ class Downvote(db.Model):
 
     
     def _repr_(self):
-        return f'comment:{self.comment}
+        return f"comment:{self.comment}
 
     
