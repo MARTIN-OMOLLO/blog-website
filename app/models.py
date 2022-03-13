@@ -43,3 +43,15 @@ class User(db.Model, UserMixin):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+    class Blog(db.Model):
+    _tablename_ = 'blogs'
+    id = db.Column(db.Integer, primary_key = True)
+    title = db.Column(db.String(150),nullable = False)
+    post = db.Column(db.Text(), nullable = False)
+    comment = db.relationship('Comment',backref='blog',lazy='dynamic')
+    upvote = db.relationship('Upvote',backref='blog',lazy='dynamic')
+    downvote = db.relationship('Downvote',backref='blog',lazy='dynamic')
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category = db.Column(db.String(100), index = True,nullable = False)
+    
