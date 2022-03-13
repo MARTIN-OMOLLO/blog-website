@@ -54,4 +54,53 @@ def load_user(user_id):
     downvote = db.relationship('Downvote',backref='blog',lazy='dynamic')
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category = db.Column(db.String(100), index = True,nullable = False)
+
+    def save_p(self):
+        db.session.add(self)
+        db.session.commit()
+
+        
+    def _repr_(self):
+        return f'Blog {self.post}'
+
+
+class Upvote(db.Model):
+    _tablename_ = 'upvotes'
+
+    id = db.Column(db.Integer,primary_key=True)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+    blog_id = db.Column(db.Integer,db.ForeignKey('blogs.id'))
+    
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_upvotes(cls,id):
+        upvote = Upvote.query.filter_by(pitch_id=id).all()
+        return upvote
+
+
+    def _repr_(self):
+        return f'{self.user_id}:{self.pitch_id}'
+class Downvote(db.Model):
+    _tablename_ = 'downvotes'
+
+    id = db.Column(db.Integer,primary_key=True)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+    blog_id = db.Column(db.Integer,db.ForeignKey('blogs.id'))
+    
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+    @classmethod
+    def get_downvotes(cls,id):
+        downvote = Downvote.query.filter_by(pitch_id=id).all()
+        return downvote
+
+    def _repr_(self):
+        return f'{self.user_id}:{self.pitch_id}'
+
     
