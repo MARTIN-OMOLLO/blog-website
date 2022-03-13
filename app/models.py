@@ -103,4 +103,25 @@ class Downvote(db.Model):
     def _repr_(self):
         return f'{self.user_id}:{self.pitch_id}'
 
+        class Comment(db.Model):
+    _tablename_ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.Text(),nullable = False)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'),nullable = False)
+    blog_id = db.Column(db.Integer,db.ForeignKey('blogs.id'),nullable = False)
+
+    def save_c(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_comments(cls,blog_id):
+        comments = Comment.query.filter_by(blog_id=blog_id).all()
+
+        return comments
+
+    
+    def _repr_(self):
+        return f'comment:{self.comment}
+
     
