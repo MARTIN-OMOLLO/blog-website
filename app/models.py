@@ -3,8 +3,8 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin, current_user
 from . import login_manager
 
-class User(db.Model, UserMixin):
-    _tablename_ = 'users'
+class User(UserMixin,db.Model):
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(255), index = True, nullable = False)
     email  = db.Column(db.String(280), unique = True, index = True, nullable = False)
@@ -40,17 +40,16 @@ class User(db.Model, UserMixin):
     def _repr_(self):
         return f'User {self.username}'
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
 
-    class Blog(db.Model):
-     _tablename_ = 'blogs'
+class Blog(db.Model):
+    __tablename__ = 'blogs'
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(250),nullable = False)
     post = db.Column(db.Text(), nullable = False)
     comment = db.relationship('Comment',backref='blog',lazy='dynamic')
-    blog = db.relationship('Blog',backref='blog',lazy='dynamic')
     downvote = db.relationship('Drop',backref='blog',lazy='dynamic')
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category = db.Column(db.String(100), index = True,nullable = False)
@@ -65,7 +64,7 @@ def load_user(user_id):
 
 
 class Drop(db.Model):
-    _tablename_ = 'drops'
+    __tablename__ = 'drops'
 
     id = db.Column(db.Integer,primary_key=True)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
@@ -85,7 +84,7 @@ class Drop(db.Model):
     def _repr_(self):
         return f'{self.user_id}:{self.blog_id}'
 class Downvote(db.Model):
-    _tablename_ = 'downvotes'
+    __tablename__ = 'downvotes'
 
     id = db.Column(db.Integer,primary_key=True)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
@@ -97,14 +96,14 @@ class Downvote(db.Model):
         db.session.commit()
     @classmethod
     def get_downvotes(cls,id):
-        downvote = Downvote.query.filter_by(pitch_id=id).all()
+        downvote = Downvote.query.filter_by(blog_id=id).all()
         return downvote
 
     def _repr_(self):
-        return f'{self.user_id}:{self.pitch_id}'
+        return f'{self.user_id}:{self.blog_id}'
 
 class Comment(db.Model):
-    _tablename_ = 'comments'
+    __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.Text(),nullable = False)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'),nullable = False)
