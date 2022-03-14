@@ -7,13 +7,13 @@ class User(db.Model, UserMixin):
     _tablename_ = 'users'
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(255), index = True, nullable = False)
-    email  = db.Column(db.String(255), unique = True, index = True, nullable = False)
+    email  = db.Column(db.String(280), unique = True, index = True, nullable = False)
     secure_password = db.Column(db.String(300),nullable = False)
-    bio = db.Column(db.String(300))
+    bio = db.Column(db.String(350))
     profile_pic_path = db.Column(db.String())
     blogs = db.relationship('Blog', backref='user', lazy='dynamic')
     comment = db.relationship('Comment', backref='user', lazy='dynamic')
-    drop = db.relationship('drop',backref='user',lazy='dynamic')
+    drop = db.relationship('Drop',backref='user',lazy='dynamic')
     downvote = db.relationship('Downvote',backref='user',lazy='dynamic')
 
     def is_active(self):
@@ -47,11 +47,11 @@ def load_user(user_id):
     class Blog(db.Model):
      _tablename_ = 'blogs'
     id = db.Column(db.Integer, primary_key = True)
-    title = db.Column(db.String(150),nullable = False)
+    title = db.Column(db.String(250),nullable = False)
     post = db.Column(db.Text(), nullable = False)
     comment = db.relationship('Comment',backref='blog',lazy='dynamic')
-    upvote = db.relationship('Upvote',backref='blog',lazy='dynamic')
-    downvote = db.relationship('Downvote',backref='blog',lazy='dynamic')
+    blog = db.relationship('Blog',backref='blog',lazy='dynamic')
+    downvote = db.relationship('Drop',backref='blog',lazy='dynamic')
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category = db.Column(db.String(100), index = True,nullable = False)
 
@@ -77,13 +77,13 @@ class Drop(db.Model):
         db.session.commit()
 
     @classmethod
-    def get_upvotes(cls,id):
-        upvote = Upvote.query.filter_by(pitch_id=id).all()
-        return upvote
+    def get_drops(cls,id):
+        drop = Drop.query.filter_by(blog_id=id).all()
+        return drop
 
 
     def _repr_(self):
-        return f'{self.user_id}:{self.pitch_id}'
+        return f'{self.user_id}:{self.blog_id}'
 class Downvote(db.Model):
     _tablename_ = 'downvotes'
 
