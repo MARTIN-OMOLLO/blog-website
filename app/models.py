@@ -121,7 +121,7 @@ class Comment(db.Model):
         return comments
 
     
-    def _repr_(self):
-        return f"comment:{self.comment}
+    # def _repr_(self):
+    #     return f"comment:{self.comment}
 
     
