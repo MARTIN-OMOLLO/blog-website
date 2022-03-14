@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
     profile_pic_path = db.Column(db.String())
     blogs = db.relationship('Blog', backref='user', lazy='dynamic')
     comment = db.relationship('Comment', backref='user', lazy='dynamic')
-    upvote = db.relationship('Upvote',backref='user',lazy='dynamic')
+    drop = db.relationship('drop',backref='user',lazy='dynamic')
     downvote = db.relationship('Downvote',backref='user',lazy='dynamic')
 
     def is_active(self):
@@ -64,8 +64,8 @@ def load_user(user_id):
         return f'Blog {self.post}'
 
 
-class Upvote(db.Model):
-    _tablename_ = 'upvotes'
+class Drop(db.Model):
+    _tablename_ = 'drops'
 
     id = db.Column(db.Integer,primary_key=True)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))

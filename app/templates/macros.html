@@ -1,0 +1,64 @@
+{% macro displayBlogs(blogs) %}
+
+
+<div class="blogs">
+    {% for blog in blogs %}
+    <div class="blog">
+        <h4 class="blog__username">@{{blog.user.username}} </h4>
+        <p class="blog__text"> {{blog.text}} </p>
+
+        <a class="bloggers" href="{{url_for('main.category', blog=blog.category)}} ">
+            #{{blog.category}} </a>
+
+        <div class="current-blog">
+            <form action="/drop/{{blog.id}}" method="POST">
+                <span> {{blogs.dropped|length}} </span>
+                <button type="submit" class="btn--drop">
+                    
+                </button>
+            </form>
+            
+        </div>
+
+
+        <button class="midilla">{{blog.comments | length}} Comments</button>
+
+        <div class="posts">
+            <form action="/create-comment/{{post.id}}" method="POST">
+                <input required type="text" name="text" placeholder="Add comment">
+                <button type="submit" class="btn">
+                    Add
+                </button>
+
+            </form>
+            {% for comment in post.comments %}
+            <p>{{comment.user.username}}: {{comment.text}} </p>
+
+            {% endfor %}
+        </div>
+
+
+    </div>
+    {% endfor %}
+
+    <script>
+        var mid = document.getElementsByClassName("midilla");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            mid[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        }
+    </script>
+
+</div>
+
+
+{% endmacro %}
