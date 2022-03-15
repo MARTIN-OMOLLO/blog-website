@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% import "bootstrap/wtf.html" as wtf%}
 {% block content %}
 
 <div class="Blog-head">
@@ -12,16 +12,7 @@
     </div>
     {% endif %}
     {% endwith %}
-    <form method="POST" action="/login" class="auth">
-        <input type="email" name="email" placeholder="Email" autofocus="">
-        <input type="password" name="password" placeholder="Password">
-        <label class="checkbox">
-            <input type="checkbox" name="remember">
-            Remember me
-        </label>
-
-        <button type="submit" class="btn">Login</button>
-    </form>
+    {{wtf.quick_form(login_form)}}
 </div>
 
 {% endblock %}

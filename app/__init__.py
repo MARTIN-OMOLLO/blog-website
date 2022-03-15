@@ -4,10 +4,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from config import config_options
 from flask_mail import Mail
+from flask_simplemde import SimpleMDE
 import os
 bootstrap = Bootstrap()
 
 db = SQLAlchemy()
+simple = SimpleMDE()
 mail = Mail()
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
@@ -21,13 +23,16 @@ def create_app(config_name):
     config_options[config_name].init_app(app)
     # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
     # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+ 
     #Initializing Flask Extensions
     bootstrap.init_app(app)
     db.init_app(app)
     # from .models import Usercreate_blog
-    login_manager.init_app(app)
 
+    mail.init_app(app)
+    simple.init_app(app)
+    login_manager.init_app(app)
+    from .models import User
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
