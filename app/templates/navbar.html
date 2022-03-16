@@ -24,7 +24,7 @@
           <ul class="nav navbar-nav">
               <li><a href="/">Home</a></li>
       </div>
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right" style="background-color: rgb(215, 228, 240); color: #fff; padding: 100px 25px; text-align: center;">
         {% if current_user.is_authenticated %}
         <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>
         <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
