@@ -39,6 +39,10 @@ def login_post():
     login_user(user, remember=remember)
     return redirect(url_for('main.profile'))
 
+@auth.route('/create_blog')
+def create_blog():
+    return render_template('blog.html')
+
 
 @auth.route('/signup')
 def signup():
