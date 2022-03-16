@@ -15,6 +15,8 @@ html {
 body {
   font-size: 1.6rem;
   line-height: 1.6;
+  background-color:blue ;
+
 }
 
 :root {
@@ -44,7 +46,9 @@ a:active {
   color: var(--color-white);
 }
 
-.Blog-head {
+.Header{
+  text-align: center;
+  background-color: blue;
   width: min-content;
   padding: 2rem;
   position: absolute;
@@ -203,8 +207,8 @@ a:active {
   margin-top: 0.8rem;
   margin-bottom: 0.5rem;
 }
-
-/* Create pitch box */
+ 
+ /* Create pitch box  */
 
 .create-pitch,
 .auth {
@@ -228,4 +232,4 @@ a:active {
 }
 .card{
   color: rgb(247, 0, 255);
-}
+}  
